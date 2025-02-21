@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Countdown to payday</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    #countdown {
+      font-size: 2em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Countdown to payday</h1>
+  <div id="countdown"></div>
+
+  <script>
+    const targetDayOfMonth = 15; // Make the 15th a variable
+    function updateCountdown() {
+      const now = new Date();
+      const currentDay = now.getDate();
+
+      let targetDate;
+
+      if (currentDay < targetDayOfMonth) {
+        // Target day of the current month
+        targetDate = new Date(now.getFullYear(), now.getMonth(), targetDayOfMonth);
+      } else {
+        // Target day of the next month
+        targetDate = new Date(now.getFullYear(), now.getMonth() + 1, targetDayOfMonth);
+      }
+
+      const dayOfWeek = targetDate.getDay(); // 0 (Sun) to 6 (Sat)
+
+      if (dayOfWeek === 0) { // Sunday
+        targetDate.setDate(targetDate.getDate() - 2); // Back to Friday
+      } else if (dayOfWeek === 6) { // Saturday
+        targetDate.setDate(targetDate.getDate() - 1); // Back to Friday
+      }
+
+      const timeLeft = targetDate.getTime() - now.getTime();
+
+      if (timeLeft <= 0) {
+        document.getElementById("countdown").textContent = "It's the Target Day!";
+        return; // Stop the countdown
+      }
+
+      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").textContent =
+        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    // Update the countdown every second
+    setInterval(updateCountdown, 1000);
+
+    // Initial call to update the countdown immediately
+    updateCountdown();
+  </script>
+</body>
+</html>
