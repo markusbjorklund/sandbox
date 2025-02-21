@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lofoten Countdown</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 50px;
+        }
+
+        #countdown {
+            font-size: 3em;
+            margin-top: 30px;
+        }
+
+        .time-unit {
+            display: inline-block;
+            margin: 0 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lofoten Countdown</h1>
+    <div id="countdown">
+        <div class="time-unit">
+            <span id="days"></span> days
+        </div>
+        <div class="time-unit">
+            <span id="hours"></span> hours
+        </div>
+        <div class="time-unit">
+            <span id="minutes"></span> minutes
+        </div>
+        <div class="time-unit">
+            <span id="seconds"></span> seconds
+        </div>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            const now = new Date();
+            let targetDate = new Date(new Date().getFullYear(), 5, 17); // June is month 5 (zero-based)
+
+            // If June 17th has already passed this year, calculate for next year.
+            if (targetDate < now) {
+                targetDate = new Date(new Date().getFullYear() + 1, 5, 17);
+            }
+
+            const timeLeft = targetDate.getTime() - now.getTime();
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+
+        // Update the countdown every second
+        updateCountdown(); // Call once to initialize immediately
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
