@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Training</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+
+        .exercise {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .completed {
+            background-color: #e6ffe6; /* Light green */
+        }
+
+        button {
+            cursor: pointer;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: #fff;
+        }
+
+        button:hover {
+            background-color: #f0f0f0;
+        }
+
+        #reset-button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Daily Training</h1>
+
+    <div id="training-container">
+        <div class="exercise" id="exercise-A">
+            <p><strong>A:</strong> Perform 3 sets of 10 push-ups.</p>
+            <button onclick="toggleCompletion('A')">Complete</button>
+        </div>
+
+        <div class="exercise" id="exercise-B">
+            <p><strong>B:</strong> Hold a plank for 60 seconds.</p>
+            <button onclick="toggleCompletion('B')">Complete</button>
+        </div>
+
+        <div class="exercise" id="exercise-C">
+            <p><strong>C:</strong> Do 20 squats.</p>
+            <button onclick="toggleCompletion('C')">Complete</button>
+        </div>
+    </div>
+
+    <button id="reset-button" onclick="resetAll()">Reset All</button>
+
+    <script>
+        // Load completion status from localStorage
+        const trainingContainer = document.getElementById('training-container');
+        const exercises = trainingContainer.querySelectorAll('.exercise');
+
+        exercises.forEach(exerciseDiv => {
+            const exerciseId = exerciseDiv.id.replace('exercise-', ''); // Extract A, B, or C
+            const completed = localStorage.getItem(exerciseId) === 'true'; // Get status (true/false string or null)
+
+            if (completed) {
+                exerciseDiv.classList.add('completed');
+                exerciseDiv.querySelector('button').textContent = 'Incomplete';
+            }
+        });
+
+        function toggleCompletion(exerciseId) {
+            const exerciseDiv = document.getElementById(`exercise-${exerciseId}`);
+            const isCompleted = exerciseDiv.classList.contains('completed');
+
+            if (isCompleted) {
+                exerciseDiv.classList.remove('completed');
+                exerciseDiv.querySelector('button').textContent = 'Complete';
+                localStorage.removeItem(exerciseId); // Remove from localStorage
+            } else {
+                exerciseDiv.classList.add('completed');
+                exerciseDiv.querySelector('button').textContent = 'Incomplete';
+                localStorage.setItem(exerciseId, 'true'); // Store in localStorage
+            }
+        }
+
+        function resetAll() {
+            exercises.forEach(exerciseDiv => {
+                const exerciseId = exerciseDiv.id.replace('exercise-', '');
+                exerciseDiv.classList.remove('completed');
+                exerciseDiv.querySelector('button').textContent = 'Complete';
+                localStorage.removeItem(exerciseId); // Clear localStorage
+            });
+        }
+    </script>
+
+</body>
+</html>
