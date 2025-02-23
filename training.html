@@ -3,63 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Training</title>
+    <title>Träningsschema</title>
     <style>
         body {
-            font-family: sans-serif;
-            margin: 20px;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #3498db;
+            margin-bottom: 30px;
+        }
+
+        .exercise-group {
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .exercise-group h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
         }
 
         .exercise {
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #ddd;
             border-radius: 5px;
+            background-color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .exercise:hover {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .completed {
-            background-color: #e6ffe6; /* Light green */
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
         }
 
         button {
             cursor: pointer;
-            padding: 5px 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            background-color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: #fff;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+            outline: none; /* Removes the focus outline */
         }
 
         button:hover {
-            background-color: #f0f0f0;
+            background-color: #2980b9;
+        }
+
+        button:active { /* Adds a pressed effect */
+            transform: translateY(1px);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         #reset-button {
-            margin-top: 20px;
+            display: block;
+            margin: 30px auto 0;
+            background-color: #e74c3c;
+        }
+
+        #reset-button:hover {
+            background-color: #c0392b;
         }
     </style>
 </head>
 <body>
 
-    <h1>Daily Training</h1>
+    <div class="container">
+        <h1>Träningsschema</h1>
 
-    <div id="training-container">
-        <div class="exercise" id="exercise-A">
-            <p><strong>A:</strong> Perform 3 sets of 10 push-ups.</p>
-            <button onclick="toggleCompletion('A')">Complete</button>
+        <div id="training-container">
+
+            <!-- Exercise Group Pass A -->
+            <div class="exercise-group" id="exercise-group-A">
+                <h2>Pass A</h2>
+
+                <div class="exercise" id="exercise-A1">
+                    <p><strong>Knäböj:</strong> 3 set x 8-10 reps</p>
+                    <button onclick="toggleCompletion('A1')">Klar</button>
+                </div>
+
+                <div class="exercise" id="exercise-A2">
+                    <p><strong>Bänkpress:</strong> 3 set x 8-10 reps</p>
+                    <button onclick="toggleCompletion('A2')">Klar</button>
+                </div>
+
+                <div class="exercise" id="exercise-A3">
+                    <p><strong>Hantelrodd:</strong> 3 set x 10 reps</p>
+                    <button onclick="toggleCompletion('A3')">Klar</button>
+                </div>
+            </div>
+
+            <!-- Exercise Group Pass B -->
+            <div class="exercise-group" id="exercise-group-B">
+                <h2>Pass B</h2>
+                <div class="exercise" id="exercise-B1">
+                    <p><strong>Marklyft:</strong> 3 set x 6-8 reps</p>
+                    <button onclick="toggleCompletion('B1')">Klar</button>
+                </div>
+
+                <div class="exercise" id="exercise-B2">
+                    <p><strong>Latsdrag:</strong> 3 set x 10 reps</p>
+                    <button onclick="toggleCompletion('B2')">Klar</button>
+                </div>
+
+                <div class="exercise" id="exercise-B3">
+                    <p><strong>Militärpress:</strong> 3 set x 10 reps</p>
+                    <button onclick="toggleCompletion('B3')">Klar</button>
+                </div>
+            </div>
+
+            <!-- Exercise Group Pass C -->
+            <div class="exercise-group" id="exercise-group-C">
+                <h2>Pass C</h2>
+                <div class="exercise" id="exercise-C1">
+                    <p><strong>Gång:</strong> Rask takt 1 timme</p>
+                    <button onclick="toggleCompletion('C1')">Klar</button>
+                </div>
+            </div>
+
         </div>
 
-        <div class="exercise" id="exercise-B">
-            <p><strong>B:</strong> Hold a plank for 60 seconds.</p>
-            <button onclick="toggleCompletion('B')">Complete</button>
-        </div>
-
-        <div class="exercise" id="exercise-C">
-            <p><strong>C:</strong> Do 20 squats.</p>
-            <button onclick="toggleCompletion('C')">Complete</button>
-        </div>
+        <button id="reset-button" onclick="resetAll()">Återställ</button>
     </div>
-
-    <button id="reset-button" onclick="resetAll()">Reset All</button>
 
     <script>
         // Load completion status from localStorage
@@ -67,12 +160,14 @@
         const exercises = trainingContainer.querySelectorAll('.exercise');
 
         exercises.forEach(exerciseDiv => {
-            const exerciseId = exerciseDiv.id.replace('exercise-', ''); // Extract A, B, or C
-            const completed = localStorage.getItem(exerciseId) === 'true'; // Get status (true/false string or null)
+            const exerciseId = exerciseDiv.id.replace('exercise-', ''); // Extract exercise ID
+            const completed = localStorage.getItem(exerciseId) === 'true'; // Get status
 
             if (completed) {
                 exerciseDiv.classList.add('completed');
-                exerciseDiv.querySelector('button').textContent = 'Incomplete';
+                exerciseDiv.querySelector('button').textContent = 'Ej Klar'; // Translate "Incomplete"
+            } else {
+                exerciseDiv.querySelector('button').textContent = 'Klar'; // Translate "Complete"
             }
         });
 
@@ -82,12 +177,12 @@
 
             if (isCompleted) {
                 exerciseDiv.classList.remove('completed');
-                exerciseDiv.querySelector('button').textContent = 'Complete';
-                localStorage.removeItem(exerciseId); // Remove from localStorage
+                exerciseDiv.querySelector('button').textContent = 'Klar';
+                localStorage.removeItem(exerciseId);
             } else {
                 exerciseDiv.classList.add('completed');
-                exerciseDiv.querySelector('button').textContent = 'Incomplete';
-                localStorage.setItem(exerciseId, 'true'); // Store in localStorage
+                exerciseDiv.querySelector('button').textContent = 'Ej Klar';
+                localStorage.setItem(exerciseId, 'true');
             }
         }
 
@@ -95,8 +190,8 @@
             exercises.forEach(exerciseDiv => {
                 const exerciseId = exerciseDiv.id.replace('exercise-', '');
                 exerciseDiv.classList.remove('completed');
-                exerciseDiv.querySelector('button').textContent = 'Complete';
-                localStorage.removeItem(exerciseId); // Clear localStorage
+                exerciseDiv.querySelector('button').textContent = 'Klar';
+                localStorage.removeItem(exerciseId);
             });
         }
     </script>
