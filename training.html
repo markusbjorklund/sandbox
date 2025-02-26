@@ -92,6 +92,11 @@
         #reset-button:hover {
             background-color: #c0392b;
         }
+
+        .hidden-button {
+            display: none; /* Make the button invisible */
+        }
+
     </style>
 </head>
 <body>
@@ -101,51 +106,67 @@
 
         <div id="training-container">
 
-            <!-- Exercise Group Pass A -->
-            <div class="exercise-group" id="exercise-group-A">
-                <h2>Pass A</h2>
-
-                <div class="exercise" id="exercise-A1">
-                    <p><strong>Knäböj:</strong> 3 set x 8-10 reps</p>
-                    <button onclick="toggleCompletion('A1')">Klar</button>
-                </div>
-
-                <div class="exercise" id="exercise-A2">
-                    <p><strong>Bänkpress:</strong> 3 set x 8-10 reps</p>
-                    <button onclick="toggleCompletion('A2')">Klar</button>
-                </div>
-
-                <div class="exercise" id="exercise-A3">
-                    <p><strong>Hantelrodd:</strong> 3 set x 10 reps</p>
-                    <button onclick="toggleCompletion('A3')">Klar</button>
-                </div>
-            </div>
-
-            <!-- Exercise Group Pass B -->
-            <div class="exercise-group" id="exercise-group-B">
-                <h2>Pass B</h2>
-                <div class="exercise" id="exercise-B1">
-                    <p><strong>Marklyft:</strong> 3 set x 6-8 reps</p>
-                    <button onclick="toggleCompletion('B1')">Klar</button>
-                </div>
-
-                <div class="exercise" id="exercise-B2">
-                    <p><strong>Latsdrag:</strong> 3 set x 10 reps</p>
-                    <button onclick="toggleCompletion('B2')">Klar</button>
-                </div>
-
-                <div class="exercise" id="exercise-B3">
-                    <p><strong>Militärpress:</strong> 3 set x 10 reps</p>
-                    <button onclick="toggleCompletion('B3')">Klar</button>
-                </div>
-            </div>
-
-            <!-- Exercise Group Pass C -->
-            <div class="exercise-group" id="exercise-group-C">
-                <h2>Pass C</h2>
-                <div class="exercise" id="exercise-C1">
+            <!-- Exercise Group Pass 1 -->
+            <div class="exercise-group" id="exercise-group-1">
+                <h2>Pass 1</h2>
+                <div class="exercise" id="exercise-1C1">
                     <p><strong>Gång:</strong> Rask takt 1 timme</p>
-                    <button onclick="toggleCompletion('C1')">Klar</button>
+                    <button onclick="toggleCompletion('1C1')" id="button-1C1">Klar</button>
+                </div>
+            </div>
+
+            <!-- Exercise Group Pass 2 -->
+            <div class="exercise-group" id="exercise-group-2">
+                <h2>Pass 2</h2>
+
+                <div class="exercise" id="exercise-2A1">
+                    <p><strong>Knäböj:</strong> 3 set x 8-10 reps</p>
+                    <button onclick="toggleCompletion('2A1')" id="button-2A1">Klar</button>
+                </div>
+
+                <div class="exercise" id="exercise-2A2">
+                    <p><strong>Bänkpress:</strong> 3 set x 8-10 reps</p>
+                    <button onclick="toggleCompletion('2A2')" id="button-2A2">Klar</button>
+                </div>
+
+                <div class="exercise" id="exercise-2A3">
+                    <p><strong>Hantelrodd:</strong> 3 set x 10 reps</p>
+                    <button onclick="toggleCompletion('2A3')" id="button-2A3">Klar</button>
+                </div>
+            </div>
+            <!-- Exercise Group Pass 3 -->
+            <div class="exercise-group" id="exercise-group-3">
+                <h2>Pass 3</h2>
+                <div class="exercise" id="exercise-3C1">
+                    <p><strong>Gång:</strong> Rask takt 1 timme</p>
+                    <button onclick="toggleCompletion('3C1')" id="button-3C1">Klar</button>
+                </div>
+            </div>
+
+            <!-- Exercise Group Pass 4 -->
+            <div class="exercise-group" id="exercise-group-4">
+                <h2>Pass 4</h2>
+                <div class="exercise" id="exercise-4B1">
+                    <p><strong>Marklyft:</strong> 3 set x 6-8 reps</p>
+                    <button onclick="toggleCompletion('4B1')" id="button-4B1">Klar</button>
+                </div>
+
+                <div class="exercise" id="exercise-4B2">
+                    <p><strong>Latsdrag:</strong> 3 set x 10 reps</p>
+                    <button onclick="toggleCompletion('4B2')" id="button-4B2">Klar</button>
+                </div>
+
+                <div class="exercise" id="exercise-4B3">
+                    <p><strong>Militärpress:</strong> 3 set x 10 reps</p>
+                    <button onclick="toggleCompletion('4B3')" id="button-4B3">Klar</button>
+                </div>
+            </div>
+             <!-- Exercise Group Pass 5 -->
+            <div class="exercise-group" id="exercise-group-5">
+                <h2>Pass 5</h2>
+                <div class="exercise" id="exercise-5C1">
+                    <p><strong>Gång:</strong> Rask takt 1 timme</p>
+                    <button onclick="toggleCompletion('5C1')" id="button-5C1">Klar</button>
                 </div>
             </div>
 
@@ -165,24 +186,38 @@
 
             if (completed) {
                 exerciseDiv.classList.add('completed');
-                exerciseDiv.querySelector('button').textContent = 'Ej Klar'; // Translate "Incomplete"
-            } else {
-                exerciseDiv.querySelector('button').textContent = 'Klar'; // Translate "Complete"
+                let buttonId = "button-" + exerciseId;
+                let button = document.getElementById(buttonId);
+                  if (button) {
+                    button.classList.add('hidden-button');
+                }
             }
         });
 
         function toggleCompletion(exerciseId) {
             const exerciseDiv = document.getElementById(`exercise-${exerciseId}`);
             const isCompleted = exerciseDiv.classList.contains('completed');
+            let buttonId = "button-" + exerciseId;
+            let button = document.getElementById(buttonId);
+
 
             if (isCompleted) {
                 exerciseDiv.classList.remove('completed');
-                exerciseDiv.querySelector('button').textContent = 'Klar';
+                 if (button) {
+                    button.classList.remove('hidden-button');
+                }
                 localStorage.removeItem(exerciseId);
+
+
             } else {
                 exerciseDiv.classList.add('completed');
-                exerciseDiv.querySelector('button').textContent = 'Ej Klar';
+
+                if (button) {
+                    button.classList.add('hidden-button');
+                }
                 localStorage.setItem(exerciseId, 'true');
+
+
             }
         }
 
@@ -190,7 +225,11 @@
             exercises.forEach(exerciseDiv => {
                 const exerciseId = exerciseDiv.id.replace('exercise-', '');
                 exerciseDiv.classList.remove('completed');
-                exerciseDiv.querySelector('button').textContent = 'Klar';
+                let buttonId = "button-" + exerciseId;
+                 let button = document.getElementById(buttonId);
+                if (button) {
+                    button.classList.remove('hidden-button');
+                }
                 localStorage.removeItem(exerciseId);
             });
         }
