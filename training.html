@@ -72,6 +72,7 @@
             font-size: 1em;
             transition: background-color 0.3s ease;
             outline: none; /* Removes the focus outline */
+            margin-top: 5px; /* Add a little spacing above buttons */
         }
 
         button:hover {
@@ -97,11 +98,14 @@
             display: none; /* Make the button invisible */
         }
         .weight-input {
-            margin-left: 10px;
-            padding: 5px;
+            display: block; /* Force weight input to new line */
+            margin-top: 5px; /* Space between exercise description and input */
+            margin-bottom: 15px; /* Add more spacing */
+            padding: 8px; /* Increased padding for larger touch area */
             border: 1px solid #ccc;
             border-radius: 4px;
-            width: 60px;
+            width: 80px; /* Set to 80px */
+            font-size: 1.1em; /* Make font bigger for better readability */
         }
 
         .weight-input.hidden {
@@ -110,6 +114,25 @@
 
         .weight-input.visible {
             visibility: visible; /* Show the input */
+        }
+
+        @media (max-width: 600px) { /* Media query for smaller screens */
+            .container {
+                margin: 10px auto; /* Reduce margin on small screens */
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5em; /* Smaller heading on smaller screens */
+            }
+
+            .exercise-group {
+                padding: 10px; /* Reduced padding in exercise groups */
+            }
+
+            .weight-input {
+                width: 70px; /* Make the font bigger in phone */
+            }
         }
 
     </style>
@@ -135,25 +158,22 @@
                 <h2>Pass 2</h2>
 
                 <div class="exercise" id="exercise-2A1">
-                    <p><strong>Knäböj:</strong> 3 set x 8-10 reps
-                        <input type="number" class="weight-input hidden" id="weight-2A1" placeholder="Vikt (kg)">
-                    </p>
+                    <p><strong>Knäböj:</strong> 3 set x 8-10 reps</p>
+                     <input type="number" class="weight-input hidden" id="weight-2A1" placeholder="Vikt (kg)">
                     <button onclick="toggleCompletion('2A1')" id="button-2A1">Klar</button>
                      <button onclick="resetWeight('2A1')">Återställ Vikt</button>
                 </div>
 
                 <div class="exercise" id="exercise-2A2">
-                    <p><strong>Bänkpress:</strong> 3 set x 8-10 reps
-                      <input type="number" class="weight-input hidden" id="weight-2A2" placeholder="Vikt (kg)">
-                    </p>
+                    <p><strong>Bänkpress:</strong> 3 set x 8-10 reps</p>
+                     <input type="number" class="weight-input hidden" id="weight-2A2" placeholder="Vikt (kg)">
                     <button onclick="toggleCompletion('2A2')" id="button-2A2">Klar</button>
                        <button onclick="resetWeight('2A2')">Återställ Vikt</button>
                 </div>
 
                 <div class="exercise" id="exercise-2A3">
-                    <p><strong>Hantelrodd:</strong> 3 set x 10 reps
-                      <input type="number" class="weight-input hidden" id="weight-2A3" placeholder="Vikt (kg)">
-                    </p>
+                    <p><strong>Hantelrodd:</strong> 3 set x 10 reps</p>
+                    <input type="number" class="weight-input hidden" id="weight-2A3" placeholder="Vikt (kg)">
                     <button onclick="toggleCompletion('2A3')" id="button-2A3">Klar</button>
                        <button onclick="resetWeight('2A3')">Återställ Vikt</button>
                 </div>
@@ -171,25 +191,22 @@
             <div class="exercise-group" id="exercise-group-4">
                 <h2>Pass 4</h2>
                 <div class="exercise" id="exercise-4B1">
-                    <p><strong>Marklyft:</strong> 3 set x 6-8 reps
-                         <input type="number" class="weight-input hidden" id="weight-4B1" placeholder="Vikt (kg)">
-                    </p>
+                    <p><strong>Marklyft:</strong> 3 set x 6-8 reps</p>
+                     <input type="number" class="weight-input hidden" id="weight-4B1" placeholder="Vikt (kg)">
                     <button onclick="toggleCompletion('4B1')" id="button-4B1">Klar</button>
                      <button onclick="resetWeight('4B1')">Återställ Vikt</button>
                 </div>
 
                 <div class="exercise" id="exercise-4B2">
-                    <p><strong>Latsdrag:</strong> 3 set x 10 reps
-                         <input type="number" class="weight-input hidden" id="weight-4B2" placeholder="Vikt (kg)">
-                    </p>
+                    <p><strong>Latsdrag:</strong> 3 set x 10 reps</p>
+                    <input type="number" class="weight-input hidden" id="weight-4B2" placeholder="Vikt (kg)">
                     <button onclick="toggleCompletion('4B2')" id="button-4B2">Klar</button>
                        <button onclick="resetWeight('4B2')">Återställ Vikt</button>
                 </div>
 
                 <div class="exercise" id="exercise-4B3">
-                    <p><strong>Militärpress:</strong> 3 set x 10 reps
-                        <input type="number" class="weight-input hidden" id="weight-4B3" placeholder="Vikt (kg)">
-                    </p>
+                    <p><strong>Militärpress:</strong> 3 set x 10 reps</p>
+                    <input type="number" class="weight-input hidden" id="weight-4B3" placeholder="Vikt (kg)">
                     <button onclick="toggleCompletion('4B3')" id="button-4B3">Klar</button>
                        <button onclick="resetWeight('4B3')">Återställ Vikt</button>
                 </div>
