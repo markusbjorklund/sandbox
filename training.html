@@ -96,6 +96,21 @@
         .hidden-button {
             display: none; /* Make the button invisible */
         }
+        .weight-input {
+            margin-left: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 60px;
+        }
+
+        .weight-input.hidden {
+            visibility: hidden; /* Initially hide the input */
+        }
+
+        .weight-input.visible {
+            visibility: visible; /* Show the input */
+        }
 
     </style>
 </head>
@@ -120,18 +135,27 @@
                 <h2>Pass 2</h2>
 
                 <div class="exercise" id="exercise-2A1">
-                    <p><strong>Knäböj:</strong> 3 set x 8-10 reps</p>
+                    <p><strong>Knäböj:</strong> 3 set x 8-10 reps
+                        <input type="number" class="weight-input hidden" id="weight-2A1" placeholder="Vikt (kg)">
+                    </p>
                     <button onclick="toggleCompletion('2A1')" id="button-2A1">Klar</button>
+                     <button onclick="resetWeight('2A1')">Återställ Vikt</button>
                 </div>
 
                 <div class="exercise" id="exercise-2A2">
-                    <p><strong>Bänkpress:</strong> 3 set x 8-10 reps</p>
+                    <p><strong>Bänkpress:</strong> 3 set x 8-10 reps
+                      <input type="number" class="weight-input hidden" id="weight-2A2" placeholder="Vikt (kg)">
+                    </p>
                     <button onclick="toggleCompletion('2A2')" id="button-2A2">Klar</button>
+                       <button onclick="resetWeight('2A2')">Återställ Vikt</button>
                 </div>
 
                 <div class="exercise" id="exercise-2A3">
-                    <p><strong>Hantelrodd:</strong> 3 set x 10 reps</p>
+                    <p><strong>Hantelrodd:</strong> 3 set x 10 reps
+                      <input type="number" class="weight-input hidden" id="weight-2A3" placeholder="Vikt (kg)">
+                    </p>
                     <button onclick="toggleCompletion('2A3')" id="button-2A3">Klar</button>
+                       <button onclick="resetWeight('2A3')">Återställ Vikt</button>
                 </div>
             </div>
             <!-- Exercise Group Pass 3 -->
@@ -147,18 +171,27 @@
             <div class="exercise-group" id="exercise-group-4">
                 <h2>Pass 4</h2>
                 <div class="exercise" id="exercise-4B1">
-                    <p><strong>Marklyft:</strong> 3 set x 6-8 reps</p>
+                    <p><strong>Marklyft:</strong> 3 set x 6-8 reps
+                         <input type="number" class="weight-input hidden" id="weight-4B1" placeholder="Vikt (kg)">
+                    </p>
                     <button onclick="toggleCompletion('4B1')" id="button-4B1">Klar</button>
+                     <button onclick="resetWeight('4B1')">Återställ Vikt</button>
                 </div>
 
                 <div class="exercise" id="exercise-4B2">
-                    <p><strong>Latsdrag:</strong> 3 set x 10 reps</p>
+                    <p><strong>Latsdrag:</strong> 3 set x 10 reps
+                         <input type="number" class="weight-input hidden" id="weight-4B2" placeholder="Vikt (kg)">
+                    </p>
                     <button onclick="toggleCompletion('4B2')" id="button-4B2">Klar</button>
+                       <button onclick="resetWeight('4B2')">Återställ Vikt</button>
                 </div>
 
                 <div class="exercise" id="exercise-4B3">
-                    <p><strong>Militärpress:</strong> 3 set x 10 reps</p>
+                    <p><strong>Militärpress:</strong> 3 set x 10 reps
+                        <input type="number" class="weight-input hidden" id="weight-4B3" placeholder="Vikt (kg)">
+                    </p>
                     <button onclick="toggleCompletion('4B3')" id="button-4B3">Klar</button>
+                       <button onclick="resetWeight('4B3')">Återställ Vikt</button>
                 </div>
             </div>
              <!-- Exercise Group Pass 5 -->
@@ -188,9 +221,20 @@
                 exerciseDiv.classList.add('completed');
                 let buttonId = "button-" + exerciseId;
                 let button = document.getElementById(buttonId);
-                  if (button) {
+                if (button) {
                     button.classList.add('hidden-button');
                 }
+            }
+
+            // Load weights from localStorage
+            const weightInput = document.getElementById(`weight-${exerciseId}`);
+            if (weightInput) {
+                const savedWeight = localStorage.getItem(weightInput.id);
+                if (savedWeight) {
+                    weightInput.value = savedWeight;
+                }
+                weightInput.classList.remove('hidden'); // Make input visible AFTER the localStorage value has loaded
+                weightInput.classList.add('visible');
             }
         });
 
@@ -199,16 +243,19 @@
             const isCompleted = exerciseDiv.classList.contains('completed');
             let buttonId = "button-" + exerciseId;
             let button = document.getElementById(buttonId);
+            const weightInput = document.getElementById(`weight-${exerciseId}`);
 
+            // Store the weight in localStorage
+            if (weightInput) {
+                localStorage.setItem(weightInput.id, weightInput.value);
+            }
 
             if (isCompleted) {
                 exerciseDiv.classList.remove('completed');
-                 if (button) {
+                if (button) {
                     button.classList.remove('hidden-button');
                 }
                 localStorage.removeItem(exerciseId);
-
-
             } else {
                 exerciseDiv.classList.add('completed');
 
@@ -216,8 +263,14 @@
                     button.classList.add('hidden-button');
                 }
                 localStorage.setItem(exerciseId, 'true');
+            }
+        }
 
-
+        function resetWeight(exerciseId) {
+            const weightInput = document.getElementById(`weight-${exerciseId}`);
+            if (weightInput) {
+                weightInput.value = '';
+                localStorage.removeItem(weightInput.id); // Remove the weight from localStorage using correct id
             }
         }
 
@@ -226,12 +279,14 @@
                 const exerciseId = exerciseDiv.id.replace('exercise-', '');
                 exerciseDiv.classList.remove('completed');
                 let buttonId = "button-" + exerciseId;
-                 let button = document.getElementById(buttonId);
+                let button = document.getElementById(buttonId);
                 if (button) {
                     button.classList.remove('hidden-button');
                 }
-                localStorage.removeItem(exerciseId);
+                localStorage.removeItem(exerciseId); // Only remove completion status
             });
+
+            //DO NOT RESET WEIGHTS HERE!
         }
     </script>
 
