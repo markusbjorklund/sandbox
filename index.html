@@ -1,16 +1,102 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>huh?</title>
+  <title>Markus Sandbox</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      background-color: #f8f8f8; /* Light gray background */
+      color: #333; /* Dark gray text color */
+      text-align: center; /* Center all content */
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: #fff; /* White container */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      border-radius: 8px; /* Rounded corners */
+      position: relative; /* Required for absolute positioning of the footer */
+      min-height: 500px; /* Ensure the container has enough height to position the footer at the bottom */
+    }
+
+    img {
+      width: 100px; /* Adjust size as needed */
+      height: auto;
+      border-radius: 50%; /* Make it a circle */
+       margin-bottom: 5px;  /*Added back in*/
+    }
+
+    h1 {
+      color: #333; /* Dark gray heading color */
       text-align: center;
-      margin-top: 50px;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 15px;
+    }
+
+    a {
+      display: block;
+      padding: 12px 20px;
+      background-color: #f0f0f0; /* Very light gray link background */
+      color: #333;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+      border: 1px solid #ccc;
+    }
+
+    a:hover {
+      background-color: #e0e0e0; /* Light gray link background - the current non-hover color*/
+      color: #333; /*Keep text color dark*/
+    }
+
+    p {
+      text-align: center;
+      /* font-style: italic;  Removed italic styling */
+      color: #777;
+      font-style: normal; /* Ensure no italics */
+    }
+
+    /* Footer Styles */
+    .footer {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 0.8em;
+      color: #777;
     }
   </style>
 </head>
 <body>
-  <h1>This is not the page you are looking for.</h1>
+  <div class="container">
+    <img src="https://s.gravatar.com/avatar/b4f90602a82a214c542271c9eff09ada?s=460" alt="Picture of Markus">
+    <h1>Hello. I'm Markus. And this is my sandbox.</h1>
+    <p>A place to experiment and try out new ideas.</p>
+
+    <ul>
+      <li><a href="lofoten.html">Lofoten 🏞️</a></li>
+      <li><a href="training.html">Training 🏋️‍♀️</a></li>
+      <li><a href="payday.html">Payday 💰</a></li>
+    </ul>
+
+    <p>More projects coming soon...</p>
+
+    <div class="footer">
+      Created with Google AI Studio | Hosted on GitHub Pages
+    </div>
+  </div>
 </body>
 </html>
