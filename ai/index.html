@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stylish Landing Page</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">Style<span class="highlight">.</span></div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="hero-section">
+            <div class="container">
+                <h1>Experience Modern Web Design</h1>
+                <p class="subtitle">Crafted with HTML, CSS, and a touch of elegance.</p>
+                <a href="#features" class="cta-button primary">Discover More</a>
+                <a href="#contact" class="cta-button secondary">Get In Touch</a>
+            </div>
+        </section>
+
+        <section id="features" class="features-section">
+            <div class="container">
+                <h2>Core Features</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Sleek Design</h3>
+                        <p>Visually appealing layouts using modern CSS techniques.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📱</div>
+                        <h3>Responsive</h3>
+                        <p>Looks great on desktops, tablets, and mobile devices.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡️</div>
+                        <h3>Optimized</h3>
+                        <p>Clean code focusing on performance and accessibility.</p>
+                    </div>
+                     <div class="feature-item">
+                        <div class="feature-icon">💡</div>
+                        <h3>Interactive</h3>
+                        <p>Engaging user experience with subtle animations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2>About Us</h2>
+                <p>We believe in the power of beautiful and functional design. This page is a demonstration of how clean code and thoughtful styling can create an impressive online presence. Built with passion and precision.</p>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+             <div class="container">
+                 <h2>Ready to Start?</h2>
+                 <p>Let's build something amazing together.</p>
+                 <a href="mailto:hello@example.com" class="cta-button primary large">Contact Us Now</a>
+             </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2023 Style. All rights reserved. | Designed with ❤️</p>
+        </div>
+    </footer>
+
+    <script>
+        // Basic mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('.main-nav');
+
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            menuToggle.textContent = nav.classList.contains('active') ? '✕' : '☰';
+        });
+    </script>
+
+</body>
+</html>
