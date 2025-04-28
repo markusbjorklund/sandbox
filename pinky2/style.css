@@ -1,0 +1,307 @@
+/* ---=== Basic Reset & Setup ===--- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* Updated Color Palette - more depth */
+    --color-bg-darkest: #0a0d1f;   /* Deeper Navy/Near Black */
+    --color-bg-dark: #161b32;     /* Dark Indigo */
+    --color-bg-stirring: #2a2c58; /* Muted Purple/Blue */
+    --color-bg-hope: #485c92;     /* Brighter, clearer Blue */
+    --color-text-light: #f0f0f0;   /* Brighter pale grey */
+    --color-text-main: #d5d8e4;    /* Lighter main text */
+    --color-text-heading: #ffffff; /* White heading */
+    --color-flame-bright: #ffa726; /* Brighter Orange */
+    --color-flame-glow: rgba(255, 167, 38, 0.6);
+    --color-accent-dark: #7e57c2;  /* Deeper Purple Accent */
+    --color-accent-light: #a3b6ff; /* Lighter Blue/Purple Accent for hope */
+    --color-border-hope: #c1d1ff;
+
+    --font-heading: 'Lato', sans-serif;
+    --font-body: 'Merriweather', serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-text-main);
+    background-color: var(--color-bg-darkest); /* Base background */
+    line-height: 1.7;
+    font-size: 16px;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* ---=== Layout & Section Styling ===--- */
+.full-screen-section,
+.lyric-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 20px; /* Increased padding */
+    text-align: center;
+    position: relative;
+    overflow: hidden; /* Important for pseudo-elements */
+    z-index: 1; /* Place sections above background elements */
+}
+
+.content-wrapper {
+    max-width: 800px;
+    width: 90%;
+    position: relative; /* Ensure content is above section pseudo-elements */
+    z-index: 2;
+}
+
+/* ---=== Section Backgrounds with Gradients ===--- */
+#section1 {
+    background: linear-gradient(180deg, var(--color-bg-darkest) 0%, #11152a 100%);
+}
+
+#section2 {
+    background: linear-gradient(180deg, var(--color-bg-dark) 0%, #1f2440 100%);
+}
+
+#section3 {
+    background: linear-gradient(180deg, var(--color-bg-stirring) 0%, #3c3f73 100%);
+}
+
+#section4 {
+    background: linear-gradient(180deg, var(--color-bg-hope) 0%, #6a82c3 100%);
+}
+
+
+/* ---=== Typography & Text Styling ===--- */
+h1 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 3.2rem; /* Slightly larger */
+    color: var(--color-text-heading);
+    margin-bottom: 0.5em;
+    letter-spacing: 1.5px; /* More spacing */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2); /* Subtle glow */
+}
+
+h2 {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 1.6rem;
+    color: var(--color-accent-light); /* Use lighter accent */
+    margin-bottom: 2.5em;
+    font-style: italic;
+}
+
+blockquote {
+    font-size: 1.2rem; /* Slightly larger */
+    font-style: italic;
+    color: var(--color-text-light);
+    margin-bottom: 2.5em;
+    padding-left: 1.8em; /* More space for border */
+    text-align: left;
+    display: inline-block;
+    max-width: 100%;
+    position: relative; /* Needed for border animation */
+    border-left: 4px solid transparent; /* Start transparent */
+}
+
+.opening-quote {
+    font-size: 1.4rem;
+    border-left: none;
+    padding-left: 0;
+    text-align: center;
+    margin-bottom: 3em;
+}
+
+.lyric-block {
+    margin-bottom: 3em;
+}
+
+/* ---=== Color Highlights ===--- */
+
+.flame-highlight {
+    color: var(--color-flame-bright); /* Use the brighter flame color */
+    text-shadow: 0 0 15px var(--color-flame-glow); /* Add glow */
+    /* Pulse animation will be added via class toggle */
+}
+
+#section4 blockquote {
+     border-left-color: transparent; /* Reset for hope section */
+}
+
+.final-question {
+    font-weight: 400;
+    font-size: 1.25rem;
+    /* Border style applied by animation */
+}
+
+
+/* ---=== Footer ===--- */
+footer {
+    background-color: var(--color-bg-darkest);
+    color: var(--color-text-main);
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 0.9rem;
+    position: relative; /* Ensure it's above background */
+    z-index: 1;
+}
+
+footer p {
+    margin-bottom: 0.5em;
+}
+
+footer a {
+    color: var(--color-accent-light);
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* ---=== Scroll Indicator ===--- */
+.scroll-down-indicator {
+    position: absolute;
+    bottom: 40px; /* Adjusted position */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5rem; /* Larger */
+    color: var(--color-accent-light);
+    opacity: 0.7;
+    animation: bounce 2.5s infinite ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.7; }
+    40% { transform: translateX(-50%) translateY(-15px); opacity: 1; }
+    60% { transform: translateX(-50%) translateY(-7px); opacity: 0.9; }
+}
+
+/* ---=== Animations ===--- */
+
+/* General Animation Trigger Class */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(40px); /* Start further down */
+    transition: opacity 0.8s ease-out, transform 1s ease-out;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Apply animation delays from data-attribute */
+.animate-on-scroll.visible[data-animation-delay] {
+    transition-delay: var(--animation-delay, 0s);
+}
+
+
+/* Blockquote Border Animation */
+.animate-border::before {
+    content: '';
+    position: absolute;
+    left: -4px; /* Position over the transparent border */
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: var(--color-accent-dark); /* Default border color */
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.5s; /* Delay start */
+}
+
+/* Specific Border Colors */
+#section3 .animate-border::before {
+    background-color: var(--color-accent-light);
+}
+#section4 .animate-border::before {
+    background-color: var(--color-border-hope);
+}
+#section4 .final-question.animate-border::before {
+     background: repeating-linear-gradient(
+        0deg,
+        var(--color-border-hope),
+        var(--color-border-hope) 5px,
+        transparent 5px,
+        transparent 10px
+    ); /* Dashed effect */
+}
+.flame-highlight.animate-border::before {
+    background-color: var(--color-flame-bright);
+}
+
+/* Trigger border animation */
+.animate-border.visible::before {
+    transform: scaleY(1);
+    transform-origin: top; /* Animate from top down */
+}
+
+
+/* Flame Pulse Animation */
+@keyframes pulse-flame {
+    0% { text-shadow: 0 0 15px var(--color-flame-glow); }
+    50% { text-shadow: 0 0 25px var(--color-flame-bright); }
+    100% { text-shadow: 0 0 15px var(--color-flame-glow); }
+}
+
+.flame-highlight.visible {
+    animation: pulse-flame 3s infinite ease-in-out 1s; /* Start after 1s */
+}
+
+
+/* ---=== Animated Background Elements ===--- */
+/* These create subtle star-like effects */
+@keyframes move-twink-back {
+    from {background-position:0 0;}
+    to {background-position:-10000px 5000px;}
+}
+
+.stars, .twinkling {
+    position:fixed; /* Use fixed to keep them static relative to viewport */
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100%;
+    height:100%;
+    display:block;
+    z-index: 0; /* Behind content */
+}
+
+.stars {
+ background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAQAAAAHUWYVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfiCwYDARokqg7dAAACYElEQVR42u3TQRLDIAwAQcf/abpOE0FvNbGUkt44h71/AAAAAIDZ+H0KAAAAAAAAAAAAAOAViGwiEolkIpKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJPKPg78P3/0iEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEsl/E+YBAAAAAAAAAAAAAMAf4QyIZCISiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolkJRJxDwAAAMAf43caAAAAAAAAAAAAAADgBQgGAQAAAAAAAAAAAADA7/MHXgYCAAAAAAAAAAAAAMA7EBgEAAAAAAAAAAAAAAB4B+4DAC/FKzV9mqQeAAAAAElFTkSuQmCC) repeat top center;
+ z-index:0;
+}
+
+.twinkling {
+ background:transparent url(data:image/png;base64,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) repeat top center;
+ z-index:1;
+ animation:move-twink-back 200s linear infinite; /* Adjust speed here */
+}
+
+
+/* ---=== Responsive Adjustments ===--- */
+@media (max-width: 768px) {
+    h1 { font-size: 2.8rem; }
+    h2 { font-size: 1.4rem; }
+    blockquote { font-size: 1.1rem; padding-left: 1.2em; }
+    .opening-quote { font-size: 1.25rem; }
+    .full-screen-section,
+    .lyric-section { padding: 60px 15px; }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.2rem; }
+    blockquote { font-size: 1rem; }
+    .opening-quote { font-size: 1.1rem; }
+    body { font-size: 15px; }
+    .animate-on-scroll { transform: translateY(30px); } /* Slightly less movement */
+}
