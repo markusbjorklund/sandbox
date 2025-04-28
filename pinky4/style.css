@@ -1,0 +1,165 @@
+/* ---=== Basic Reset & Setup ===--- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+    /* ... (colors and fonts remain the same) ... */
+    --color-bg-darkest: #0a0d1f;   --color-bg-dark: #161b32;
+    --color-bg-stirring: #2a2c58; --color-bg-hope: #485c92;
+    --color-text-light: #f0f0f0;   --color-text-main: #d5d8e4;
+    --color-text-heading: #ffffff; --color-flame-bright: #ffa726;
+    --color-flame-glow: rgba(255, 167, 38, 0.6);
+    --color-accent-dark: #7e57c2;  --color-accent-light: #a3b6ff;
+    --color-border-hope: #c1d1ff;
+    --font-heading: 'Lato', sans-serif; --font-body: 'Merriweather', serif;
+}
+html { scroll-behavior: smooth; } /* Keep smooth behavior */
+body { /* ... (body styles remain the same) ... */
+    font-family: var(--font-body); color: var(--color-text-main);
+    background-color: var(--color-bg-darkest); line-height: 1.7;
+    font-size: 16px; overflow-x: hidden;
+}
+
+/* ---=== Layout & Section Styling ===--- */
+.full-screen-section, .lyric-section {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    padding: 80px 20px; text-align: center;
+    position: relative; overflow: hidden; z-index: 1;
+}
+.content-wrapper {
+    max-width: 900px; width: 90%; position: relative; z-index: 2;
+    /* Add padding-bottom to make space for the arrow within sections */
+    padding-bottom: 60px; /* Adjust as needed */
+}
+#section1 .content-wrapper { padding-bottom: 0; } /* No extra padding needed for header */
+#section4 .content-wrapper { padding-bottom: 0; } /* No arrow in last section */
+
+
+/* ---=== Header Specific Layout ===--- */
+.header-content { /* ... (styles remain the same) ... */
+    display: flex; flex-direction: row; align-items: center;
+    justify-content: space-around; gap: 40px;
+}
+.header-text { flex-basis: 60%; text-align: left; }
+.album-cover-img { /* ... (styles remain the same) ... */
+    flex-basis: 35%; max-width: 300px; height: auto; object-fit: contain;
+    border-radius: 8px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ---=== Section Backgrounds ===--- */
+/* ... (background styles remain the same) ... */
+#section1 { background: linear-gradient(180deg, var(--color-bg-darkest) 0%, #11152a 100%); }
+#section2 { background: linear-gradient(180deg, var(--color-bg-dark) 0%, #1f2440 100%); }
+#section3 { background: linear-gradient(180deg, var(--color-bg-stirring) 0%, #3c3f73 100%); }
+#section4 { background: linear-gradient(180deg, var(--color-bg-hope) 0%, #6a82c3 100%); }
+
+/* ---=== Typography & Text Styling ===--- */
+/* ... (h1, h2, blockquote styles remain the same) ... */
+h1 { /* ... */ }
+h2 { /* ... */ }
+blockquote { /* ... */ }
+.opening-quote { /* ... */ text-align: left; margin-bottom: 0; }
+.lyric-block { /* ... */ text-align: center; margin-left: auto; margin-right: auto; }
+
+/* ---=== Color Highlights ===--- */
+.flame-highlight { /* ... */ }
+#section4 blockquote { border-left-color: transparent; }
+
+/* ---=== Footer ===--- */
+footer { /* ... (styles remain the same) ... */ }
+.band-photo-img { /* ... (styles remain the same) ... */ }
+footer p { /* ... */ }
+footer a { /* ... */ }
+
+/* ---=== Scroll Indicator Arrows ===--- */
+.scroll-indicator {
+    position: absolute; /* Position relative to containing element */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5rem;
+    color: var(--color-accent-light);
+    opacity: 0.7;
+    transition: opacity 0.5s ease, transform 0.3s ease; /* Add transform transition */
+    z-index: 10;
+    cursor: pointer; /* Make it clear it's clickable */
+}
+
+/* Initial arrow positioning (relative to viewport bottom) */
+#initial-scroll-indicator {
+    bottom: 40px;
+     animation: bounce 2.5s infinite ease-in-out; /* Only initial arrow bounces */
+}
+
+/* Arrows within sections (relative to content wrapper bottom) */
+#section2 .scroll-indicator,
+#section3 .scroll-indicator {
+    bottom: 15px; /* Position near the bottom of the content wrapper */
+}
+
+
+/* Hide initial arrow on scroll down */
+#initial-scroll-indicator.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Hover effect for all clickable arrows */
+.scroll-indicator:hover {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.1); /* Slightly enlarge on hover */
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+    40% { transform: translateX(-50%) translateY(-15px); opacity: 1; }
+    60% { transform: translateX(-50%) translateY(-7px); opacity: 0.9; }
+}
+
+/* ---=== Animations (Fade-in, Border, Flame Pulse) ===--- */
+/* ... (These animation styles remain the same) ... */
+.animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 1s ease-out; }
+.animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+.animate-on-scroll.visible[data-animation-delay] { transition-delay: var(--animation-delay, 0s); }
+.animate-border::before { /* ... */ }
+#section3 .animate-border::before { /* ... */ }
+#section4 .animate-border::before { /* ... */ }
+#section4 .final-question.animate-border::before { /* ... */ }
+.flame-highlight.animate-border::before { /* ... */ }
+.animate-border.visible::before { /* ... */ }
+@keyframes pulse-flame { /* ... */ }
+.flame-highlight.visible { /* ... */ }
+
+/* ---=== Animated Background Elements ===--- */
+/* ... (Stars and Twinkling styles remain the same) ... */
+@keyframes move-twink-back { /* ... */ }
+.stars, .twinkling { /* ... */ }
+.stars { /* ... */ }
+.twinkling { /* ... */ }
+
+/* ---=== Responsive Adjustments ===--- */
+/* ... (Media queries remain largely the same, check content-wrapper padding) ... */
+@media (max-width: 768px) {
+    .header-content { flex-direction: column; text-align: center; }
+    .header-text { flex-basis: auto; text-align: center; margin-bottom: 30px; }
+    .album-cover-img { flex-basis: auto; max-width: 250px; margin: 0 auto; }
+    .opening-quote { text-align: center; }
+    h1 { font-size: 2.8rem; }
+    h2 { font-size: 1.4rem; }
+    blockquote { font-size: 1.1rem; padding-left: 1.2em; }
+    .opening-quote { font-size: 1.25rem; }
+    .full-screen-section, .lyric-section { padding: 60px 15px; }
+    .content-wrapper { padding-bottom: 50px; } /* Adjust padding */
+    #section1 .content-wrapper, #section4 .content-wrapper { padding-bottom: 0; }
+}
+@media (max-width: 480px) {
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.2rem; }
+    blockquote { font-size: 1rem; }
+    .opening-quote { font-size: 1.1rem; }
+    body { font-size: 15px; }
+    .animate-on-scroll { transform: translateY(30px); }
+    .album-cover-img { max-width: 200px; }
+    .band-photo-img { max-width: 280px; }
+    .content-wrapper { padding-bottom: 40px; } /* Adjust padding */
+    #section1 .content-wrapper, #section4 .content-wrapper { padding-bottom: 0; }
+}
