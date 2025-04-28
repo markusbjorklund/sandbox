@@ -1,0 +1,231 @@
+/* ---=== Basic Reset & Setup ===--- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --color-bg-darkest: #0d1117; /* Very dark blue/black */
+    --color-bg-dark: #1a1f2c;   /* Dark blue/grey */
+    --color-bg-stirring: #2c3040; /* Slightly less dark, hint of purple/blue */
+    --color-bg-hope: #4a4e69;   /* Muted blue/grey, lighter */
+    --color-text-light: #e0e0e0; /* Pale grey/white */
+    --color-text-main: #c0c0c0; /* Slightly dimmer main text */
+    --color-text-heading: #f5f5f5; /* Brighter heading */
+    --color-flame-subtle: rgba(255, 165, 0, 0.6); /* Subtle orange */
+    --color-accent: #9a8c98;   /* Muted purple/grey accent */
+
+    --font-heading: 'Lato', sans-serif;
+    --font-body: 'Merriweather', serif;
+}
+
+html {
+    scroll-behavior: smooth; /* Smooth scroll for internal links if added */
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-text-main);
+    background-color: var(--color-bg-darkest); /* Base background */
+    line-height: 1.7;
+    font-size: 16px; /* Base font size */
+}
+
+/* ---=== Layout & Section Styling ===--- */
+.full-screen-section,
+.lyric-section {
+    min-height: 100vh; /* Make sections fill viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px; /* Padding top/bottom and left/right */
+    text-align: center;
+    position: relative; /* Needed for absolute positioning like scroll indicator */
+    overflow: hidden; /* Prevent content spillover */
+}
+
+.content-wrapper {
+    max-width: 800px; /* Limit content width */
+    width: 90%;
+}
+
+/* ---=== Specific Section Backgrounds & Moods ===--- */
+#section1 {
+    background-color: var(--color-bg-darkest);
+    /* Optional: Add a subtle background image with fixed attachment for parallax */
+    /* background-image: linear-gradient(rgba(13, 17, 23, 0.8), rgba(13, 17, 23, 0.9)), url('path/to/your/dark-blurry-image.jpg'); */
+    /* background-size: cover; */
+    /* background-position: center; */
+    /* background-attachment: fixed; */ /* Creates simple parallax */
+}
+
+#section2 {
+    background-color: var(--color-bg-dark);
+}
+
+#section3 {
+    background-color: var(--color-bg-stirring);
+    /* Maybe a subtle gradient suggesting change */
+    /* background-image: linear-gradient(to bottom, var(--color-bg-stirring), #3a3f51); */
+}
+
+#section4 {
+    background-color: var(--color-bg-hope);
+     /* Maybe a gradient suggesting dawn */
+    /* background-image: linear-gradient(to bottom, var(--color-bg-hope), #6b708f); */
+}
+
+
+/* ---=== Typography & Text Styling ===--- */
+h1 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 3rem; /* Responsive font size */
+    color: var(--color-text-heading);
+    margin-bottom: 0.5em;
+    letter-spacing: 1px;
+}
+
+h2 {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-bottom: 2em;
+    font-style: italic;
+}
+
+blockquote {
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--color-text-light);
+    margin-bottom: 2em;
+    border-left: 3px solid var(--color-accent);
+    padding-left: 1.5em;
+    text-align: left; /* Align blockquote text left for readability */
+    display: inline-block; /* Keep border tight */
+    max-width: 100%;
+}
+
+.opening-quote {
+    font-size: 1.3rem;
+    border-left: none; /* No border for opening */
+    padding-left: 0;
+    text-align: center;
+    margin-bottom: 3em;
+}
+
+.lyric-block {
+    margin-bottom: 2.5em;
+}
+
+.flame-highlight {
+    /* Subtle highlight for the "flame" stanza */
+    color: var(--color-flame-subtle);
+    border-left-color: var(--color-flame-subtle);
+}
+
+.final-question {
+    font-weight: 400; /* Slightly bolder */
+    font-size: 1.2rem;
+    border-left-style: dashed; /* Indicate uncertainty */
+}
+
+/* ---=== Footer ===--- */
+footer {
+    background-color: var(--color-bg-darkest);
+    color: var(--color-text-main);
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 0.9rem;
+}
+
+footer p {
+    margin-bottom: 0.5em;
+}
+
+footer a {
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* ---=== Scroll Indicator ===--- */
+.scroll-down-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    color: var(--color-accent);
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    40% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-5px);
+    }
+}
+
+/* ---=== Subtle Fade-in Animation on Scroll ===--- */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ---=== Responsive Adjustments ===--- */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+    h2 {
+        font-size: 1.3rem;
+    }
+    blockquote {
+        font-size: 1.05rem;
+        padding-left: 1em;
+    }
+    .opening-quote {
+         font-size: 1.15rem;
+    }
+    .full-screen-section,
+    .lyric-section {
+        padding: 40px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+    h2 {
+        font-size: 1.1rem;
+    }
+    blockquote {
+        font-size: 1rem;
+    }
+    .opening-quote {
+         font-size: 1.05rem;
+    }
+    body {
+        font-size: 15px;
+    }
+}
