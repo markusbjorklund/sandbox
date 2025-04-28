@@ -1,0 +1,323 @@
+/* ---=== Basic Reset & Setup ===--- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --color-bg-darkest: #0a0d1f;
+    --color-bg-dark: #161b32;
+    --color-bg-stirring: #2a2c58;
+    --color-bg-hope: #485c92;
+    --color-text-light: #f0f0f0;
+    --color-text-main: #d5d8e4;
+    --color-text-heading: #ffffff;
+    --color-flame-bright: #ffa726;
+    --color-flame-glow: rgba(255, 167, 38, 0.6);
+    --color-accent-dark: #7e57c2;
+    --color-accent-light: #a3b6ff;
+    --color-border-hope: #c1d1ff;
+
+    --font-heading: 'Lato', sans-serif;
+    --font-body: 'Merriweather', serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-text-main);
+    background-color: var(--color-bg-darkest);
+    line-height: 1.7;
+    font-size: 16px;
+    overflow-x: hidden;
+}
+
+/* ---=== Layout & Section Styling ===--- */
+.full-screen-section,
+.lyric-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.content-wrapper {
+    max-width: 900px; /* Slightly wider for image */
+    width: 90%;
+    position: relative;
+    z-index: 2;
+}
+
+/* ---=== Header Specific Layout ===--- */
+.header-content {
+    display: flex;
+    flex-direction: row; /* Layout side-by-side on larger screens */
+    align-items: center;
+    justify-content: space-around;
+    gap: 40px;
+}
+
+.header-text {
+    flex-basis: 60%; /* Take up more space */
+    text-align: left; /* Align text left */
+}
+
+.album-cover-img {
+    flex-basis: 35%; /* Take up less space */
+    max-width: 300px; /* Max size */
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    /* Add some visual separation */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ---=== Section Backgrounds with Gradients ===--- */
+#section1 {
+    background: linear-gradient(180deg, var(--color-bg-darkest) 0%, #11152a 100%);
+}
+#section2 {
+    background: linear-gradient(180deg, var(--color-bg-dark) 0%, #1f2440 100%);
+}
+#section3 {
+    background: linear-gradient(180deg, var(--color-bg-stirring) 0%, #3c3f73 100%);
+}
+#section4 {
+    background: linear-gradient(180deg, var(--color-bg-hope) 0%, #6a82c3 100%);
+}
+
+/* ---=== Typography & Text Styling ===--- */
+h1 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 3.2rem;
+    color: var(--color-text-heading);
+    margin-bottom: 0.5em;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+h2 {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 1.6rem;
+    color: var(--color-accent-light);
+    margin-bottom: 2.5em;
+    font-style: italic;
+}
+
+blockquote {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--color-text-light);
+    margin-bottom: 2.5em;
+    padding-left: 1.8em;
+    text-align: left;
+    display: inline-block;
+    max-width: 100%;
+    position: relative;
+    border-left: 4px solid transparent;
+}
+
+.opening-quote {
+    font-size: 1.4rem;
+    border-left: none;
+    padding-left: 0;
+    text-align: left; /* Match header text alignment */
+    margin-bottom: 0; /* Remove bottom margin as it's in flex */
+}
+
+.lyric-block {
+    margin-bottom: 3em;
+     text-align: center; /* Center align lyric blocks in subsequent sections */
+     margin-left: auto;
+     margin-right: auto;
+}
+
+
+/* ---=== Color Highlights ===--- */
+.flame-highlight {
+    color: var(--color-flame-bright);
+    text-shadow: 0 0 15px var(--color-flame-glow);
+}
+#section4 blockquote {
+     border-left-color: transparent;
+}
+
+/* ---=== Footer ===--- */
+footer {
+    background-color: var(--color-bg-darkest);
+    color: var(--color-text-main);
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+}
+
+footer p {
+    margin-bottom: 0.5em;
+}
+
+.band-photo-img {
+    display: block; /* Needed for margin auto centering */
+    max-width: 350px; /* Adjust size as needed */
+    width: 80%; /* Responsive width */
+    height: auto;
+    margin: 20px auto; /* Center horizontally, add vertical spacing */
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+footer a {
+    color: var(--color-accent-light);
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* ---=== Scroll Indicator ===--- */
+.scroll-down-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5rem;
+    color: var(--color-accent-light);
+    opacity: 0.7; /* Initial state */
+    animation: bounce 2.5s infinite ease-in-out;
+    transition: opacity 0.5s ease; /* Add transition for smooth hide/show */
+    z-index: 10; /* Ensure it's visible */
+}
+
+/* Style for when the indicator should be hidden */
+.scroll-down-indicator.hidden {
+    opacity: 0;
+    pointer-events: none; /* Prevent interaction when hidden */
+}
+
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+    40% { transform: translateX(-50%) translateY(-15px); opacity: 1; }
+    60% { transform: translateX(-50%) translateY(-7px); opacity: 0.9; }
+}
+
+/* ---=== Animations ===--- */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 1s ease-out;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.animate-on-scroll.visible[data-animation-delay] {
+    transition-delay: var(--animation-delay, 0s); /* Applied via JS now */
+}
+
+.animate-border::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: var(--color-accent-dark);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.5s;
+}
+
+#section3 .animate-border::before { background-color: var(--color-accent-light); }
+#section4 .animate-border::before { background-color: var(--color-border-hope); }
+#section4 .final-question.animate-border::before {
+     background: repeating-linear-gradient( 0deg, var(--color-border-hope), var(--color-border-hope) 5px, transparent 5px, transparent 10px );
+}
+.flame-highlight.animate-border::before { background-color: var(--color-flame-bright); }
+
+.animate-border.visible::before {
+    transform: scaleY(1);
+    transform-origin: top;
+}
+
+@keyframes pulse-flame {
+    0% { text-shadow: 0 0 15px var(--color-flame-glow); }
+    50% { text-shadow: 0 0 25px var(--color-flame-bright); }
+    100% { text-shadow: 0 0 15px var(--color-flame-glow); }
+}
+
+.flame-highlight.visible {
+    animation: pulse-flame 3s infinite ease-in-out 1s;
+}
+
+/* ---=== Animated Background Elements ===--- */
+@keyframes move-twink-back {
+    from {background-position:0 0;}
+    to {background-position:-10000px 5000px;}
+}
+
+.stars, .twinkling {
+    position:fixed;
+    top:0; left:0; right:0; bottom:0;
+    width:100%; height:100%;
+    display:block;
+    z-index: 0;
+}
+.stars { background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAQAAAAHUWYVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfiCwYDARokqg7dAAACYElEQVR42u3TQRLDIAwAQcf/abpOE0FvNbGUkt44h71/AAAAAIDZ+H0KAAAAAAAAAAAAAOAViGwiEolkIpKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJPKPg78P3/0iEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEsl/E+YBAAAAAAAAAAAAAMAf4QyIZCISiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolEJBKJRCQSiUQkEolkJRJxDwAAAMAf43caAAAAAAAAAAAAAADgBQgGAQAAAAAAAAAAAADA7/MHXgYCAAAAAAAAAAAAAMA7EBgEAAAAAAAAAAAAAAB4B+4DAC/FKzV9mqQeAAAAAElFTkSuQmCC) repeat top center; z-index:0; }
+.twinkling { background:transparent url(data:image/png;base64,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) repeat top center; z-index:1; animation:move-twink-back 200s linear infinite; }
+
+/* ---=== Responsive Adjustments ===--- */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column; /* Stack vertically on smaller screens */
+        text-align: center; /* Center everything */
+    }
+    .header-text {
+        flex-basis: auto; /* Reset basis */
+        text-align: center; /* Center text */
+        margin-bottom: 30px; /* Add space below text */
+    }
+    .album-cover-img {
+        flex-basis: auto;
+        max-width: 250px; /* Slightly smaller */
+        margin: 0 auto; /* Center the image */
+    }
+    .opening-quote {
+        text-align: center; /* Ensure quote is centered */
+    }
+
+    h1 { font-size: 2.8rem; }
+    h2 { font-size: 1.4rem; }
+    blockquote { font-size: 1.1rem; padding-left: 1.2em; }
+    .opening-quote { font-size: 1.25rem; }
+    .full-screen-section,
+    .lyric-section { padding: 60px 15px; }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.2rem; }
+    blockquote { font-size: 1rem; }
+    .opening-quote { font-size: 1.1rem; }
+    body { font-size: 15px; }
+    .animate-on-scroll { transform: translateY(30px); }
+    .album-cover-img { max-width: 200px; }
+    .band-photo-img { max-width: 280px; }
+}
