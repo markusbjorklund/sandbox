@@ -3,125 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markus och Marias trip to Lofoten</title>
+    <title>Lofoten Reflections</title> 
     <style>
         body {
             font-family: sans-serif;
             text-align: center;
             margin: 0;
-            padding: 0;
+            padding: 20px; /* Added some padding for overall spacing */
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center; /* To center the content block */
 
             /* Background Image Styles */
-            background-image: url('lofoten.jpg'); /* Replace 'your-image.jpg' with your image URL */
+            background-image: url('lofoten.jpg'); /* Keep your image */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             color: white;
+            box-sizing: border-box; /* Ensure padding doesn't cause overflow issues */
         }
-
 
         h1 {
             color: white;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Slightly stronger shadow for readability */
+            font-size: 2.2em; /* Adjusted for impact */
         }
 
-        #countdown {
-            font-size: 2em; /*Kept the size you had before*/
-            margin-top: 10px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
+        .message-container {
+            background-color: rgba(0, 0, 0, 0.75); /* Darker semi-transparent background for better text contrast */
+            padding: 25px 35px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%; /* Make it responsive */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Soft shadow for the container */
         }
 
-        .time-unit {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 10px;
-            padding: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 5px;
-            width: calc(50% - 20px);
-            box-sizing: border-box;
-            background-color: rgba(0, 0, 0, 0.7);
+        .message-container p {
             color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 1.1em;
+            line-height: 1.7;
+            margin-bottom: 18px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Shadow for paragraph text */
         }
 
-        .time-unit span {
-            font-size: 1em; /* Smaller font size for the numbers */
-            font-weight: bold;
+        .message-container p:last-child {
+            margin-bottom: 0;
         }
 
-        @media (min-width: 768px) {
-            #countdown {
-                font-size: 2em;  /*Kept the size you had before*/
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
             }
-
-            .time-unit {
-                width: auto;
+            .message-container p {
+                font-size: 1em;
             }
         }
 
         @media (max-width: 480px) {
             h1 {
-                font-size: 1.5em;
+                font-size: 1.6em;
+                margin-bottom: 20px;
             }
-            #countdown{
-                font-size: 1.5em;
+            .message-container {
+                padding: 20px;
+            }
+            .message-container p {
+                font-size: 0.95em;
+                line-height: 1.6;
             }
         }
     </style>
 </head>
 <body>
-    <h1>Trip to Lofoten starts in ...</h1>
-    <div id="countdown">
-        <div class="time-unit">
-            <span id="days"></span> days
-        </div>
-        <div class="time-unit">
-            <span id="hours"></span> hours
-        </div>
-        <div class="time-unit">
-            <span id="minutes"></span> minutes
-        </div>
-        <div class="time-unit">
-            <span id="seconds"></span> seconds
-        </div>
+    <h1>A Change in the Path</h1> 
+
+    <div class="message-container"> 
+        <p>
+            The planned journey to Lofoten won't be happening as once imagined.
+        </p>
+        <p>
+            Life sometimes shifts our course in unexpected ways. It's okay to pause and acknowledge
+            the feelings that come with these changes.
+        </p>
+        <p>
+            May the memory of what was hoped for be gentle, and may new horizons eventually bring peace and fresh inspiration.
+        </p>
     </div>
 
-    <script>
-        function updateCountdown() {
-            const now = new Date();
-            let targetDate = new Date(new Date().getFullYear(), 5, 17); // June is month 5 (zero-based)
+    <!-- The countdown div and the script have been removed -->
 
-            // If June 17th has already passed this year, calculate for next year.
-            if (targetDate < now) {
-                targetDate = new Date(new Date().getFullYear() + 1, 5, 17);
-            }
-
-            const timeLeft = targetDate.getTime() - now.getTime();
-
-            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-            document.getElementById('days').textContent = days;
-            document.getElementById('hours').textContent = hours;
-            document.getElementById('minutes').textContent = minutes;
-            document.getElementById('seconds').textContent = seconds;
-        }
-
-        // Update the countdown every second
-        updateCountdown(); // Call once to initialize immediately
-        setInterval(updateCountdown, 1000);
-    </script>
 </body>
 </html>
