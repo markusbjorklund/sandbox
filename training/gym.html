@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markus Gym Tracker</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Markus Gym">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2936/2936886.png">
+
+    <style>
+        /* Color Variables */
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: white;
+            --text-color: #333;
+            --h1-color: #1a1a1a;
+            --card-border: #d1d5db;
+            --highlight-bg: #eff6ff;
+            --exercise-border: #f0f0f0;
+        }
+
+        body.dark {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --h1-color: #ffffff;
+            --card-border: #333;
+            --highlight-bg: #1a2233;
+            --exercise-border: #2d2d2d;
+        }
+
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg-color); padding: 20px; display: flex; flex-direction: column; align-items: center; color: var(--text-color); transition: background 0.3s, color 0.3s; margin: 0; }
+        .container { max-width: 500px; width: 100%; }
+        h1 { text-align: center; color: var(--h1-color); margin-bottom: 10px; }
+        
+        .day-card { background: var(--card-bg); margin: 12px 0; padding: 16px; border-radius: 12px; border-left: 6px solid var(--card-border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); transition: transform 0.2s, background 0.3s; }
+        
+        .highlight { border-left-color: #2563eb; background: var(--highlight-bg); transform: scale(1.02); }
+        .highlight h2 { color: #2563eb; }
+
+        h2 { margin: 0 0 10px 0; font-size: 1.2rem; display: flex; justify-content: space-between; }
+        .today-tag { font-size: 0.7rem; background: #2563eb; color: white; padding: 2px 8px; border-radius: 10px; align-self: center; }
+
+        .exercise { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--exercise-border); }
+        .exercise:last-child { border-bottom: none; }
+        
+        .controls { display: flex; align-items: center; gap: 15px; }
+        .count { font-size: 1.2rem; font-weight: bold; min-width: 25px; text-align: center; }
+        
+        button.add { background: #2563eb; color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; font-size: 20px; font-weight: bold; }
+        button.add:active { background: #1e40af; transform: scale(0.9); }
+
+        .footer { margin-top: 30px; text-align: center; width: 100%; display: flex; flex-direction: column; gap: 10px; align-items: center; padding-bottom: 50px; }
+        .btn-ui { border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 220px; font-size: 0.9rem; }
+        .dark-btn { background: #555; color: white; }
+        .reset-btn { background: #ef4444; color: white; opacity: 0.8; }
+        .reset-btn:hover { opacity: 1; }
+    </style>
+</head>
+<body>
+
+<div class="container" id="schedule">
+    <h1>Markus Gym Schedule</h1>
+
+    <div class="day-card" data-day="1">
+        <h2>Monday <span class="today-tag" style="display:none">TODAY</span></h2>
+        <div class="exercise">Bench press <div class="controls"><span class="count" id="mon1">0</span><button class="add" onclick="add('mon1')">+</button></div></div>
+        <div class="exercise">Dumbbell row <div class="controls"><span class="count" id="mon2">0</span><button class="add" onclick="add('mon2')">+</button></div></div>
+        <div class="exercise">Chest press <div class="controls"><span class="count" id="mon3">0</span><button class="add" onclick="add('mon3')">+</button></div></div>
+        <div class="exercise">Behind the neck pull up <div class="controls"><span class="count" id="mon4">0</span><button class="add" onclick="add('mon4')">+</button></div></div>
+    </div>
+
+    <div class="day-card" data-day="2">
+        <h2>Tuesday <span class="today-tag" style="display:none">TODAY</span></h2>
+        <div class="exercise">Powerwalk <div class="controls"><span class="count" id="tue1">0</span><button class="add" onclick="add('tue1')">+</button></div></div>
+        <div class="exercise">Seated crunch <div class="controls"><span class="count" id="tue2">0</span><button class="add" onclick="add('tue2')">+</button></div></div>
+    </div>
+
+    <div class="day-card" data-day="3">
+        <h2>Wednesday <span class="today-tag" style="display:none">TODAY</span></h2>
+        <div class="exercise">Lats pulldown <div class="controls"><span class="count" id="wed1">0</span><button class="add" onclick="add('wed1')">+</button></div></div>
+        <div class="exercise">Incline press <div class="controls"><span class="count" id="wed2">0</span><button class="add" onclick="add('wed2')">+</button></div></div>
+        <div class="exercise">Shoulder press <div class="controls"><span class="count" id="wed3">0</span><button class="add" onclick="add('wed3')">+</button></div></div>
+        <div class="exercise">Seated cable row <div class="controls"><span class="count" id="wed4">0</span><button class="add" onclick="add('wed4')">+</button></div></div>
+    </div>
+
+    <div class="day-card" data-day="4">
+        <h2>Thursday <span class="today-tag" style="display:none">TODAY</span></h2>
+        <div class="exercise">Leg press <div class="controls"><span class="count" id="thu1">0</span><button class="add" onclick="add('thu1')">+</button></div></div>
+        <div class="exercise">Leg extension <div class="controls"><span class="count" id="thu2">0</span><button class="add" onclick="add('thu2')">+</button></div></div>
+        <div class="exercise">Hack squat <div class="controls"><span class="count" id="thu3">0</span><button class="add" onclick="add('thu3')">+</button></div></div>
+        <div class="exercise">Hip aductor <div class="controls"><span class="count" id="thu4">0</span><button class="add" onclick="add('thu4')">+</button></div></div>
+    </div>
+
+    <div class="day-card" data-day="5">
+        <h2>Friday <span class="today-tag" style="display:none">TODAY</span></h2>
+        <div class="exercise">Hammer curl <div class="controls"><span class="count" id="fri1">0</span><button class="add" onclick="add('fri1')">+</button></div></div>
+        <div class="exercise">Bicep curl <div class="controls"><span class="count" id="fri2">0</span><button class="add" onclick="add('fri2')">+</button></div></div>
+        <div class="exercise">Cross body curl <div class="controls"><span class="count" id="fri3">0</span><button class="add" onclick="add('fri3')">+</button></div></div>
+        <div class="exercise">Half barbell ➔ Full <div class="controls"><span class="count" id="fri4">0</span><button class="add" onclick="add('fri4')">+</button></div></div>
+    </div>
+
+    <div class="day-card" data-day="6">
+        <h2>Saturday <span class="today-tag" style="display:none">TODAY</span></h2>
+        <div class="exercise">Powerwalk <div class="controls"><span class="count" id="sat1">0</span><button class="add" onclick="add('sat1')">+</button></div></div>
+        <div class="exercise">Seated crunch <div class="controls"><span class="count" id="sat2">0</span><button class="add" onclick="add('sat2')">+</button></div></div>
+    </div>
+
+    <div class="footer">
+        <button class="btn-ui dark-btn" onclick="toggleDark()">Toggle Dark Mode</button>
+        <button class="btn-ui reset-btn" onclick="manualReset()">Reset All Counters</button>
+    </div>
+</div>
+
+<script>
+    const scheduleContainer = document.getElementById('schedule');
+    const dayCards = document.querySelectorAll('.day-card');
+    const today = new Date().getDay(); 
+
+    // Setup: Highlight and Move Today to Top
+    dayCards.forEach(card => {
+        if (parseInt(card.dataset.day) === today) {
+            card.classList.add('highlight');
+            card.querySelector('.today-tag').style.display = 'inline-block';
+            scheduleContainer.insertBefore(card, scheduleContainer.children[1]);
+        }
+    });
+
+    function add(id) {
+        let el = document.getElementById(id);
+        let count = parseInt(el.innerText) + 1;
+        el.innerText = count;
+        localStorage.setItem(id, count);
+        localStorage.setItem('lastDate', new Date().toDateString());
+    }
+
+    function manualReset() {
+        if(confirm("Reset all counts to 0?")) {
+            const mode = localStorage.getItem('darkMode');
+            localStorage.clear();
+            if(mode) localStorage.setItem('darkMode', mode);
+            location.reload();
+        }
+    }
+
+    function toggleDark() {
+        document.body.classList.toggle('dark');
+        localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+    }
+
+    window.onload = () => {
+        // Load Dark Mode
+        if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark');
+
+        // Load Counts & Auto-Reset at midnight
+        const lastDate = localStorage.getItem('lastDate');
+        const todayStr = new Date().toDateString();
+
+        if (lastDate && lastDate !== todayStr) {
+            const mode = localStorage.getItem('darkMode');
+            localStorage.clear();
+            if(mode) localStorage.setItem('darkMode', mode);
+        } else {
+            document.querySelectorAll('.count').forEach(span => {
+                const saved = localStorage.getItem(span.id);
+                if (saved) span.innerText = saved;
+            });
+        }
+    };
+</script>
+
+</body>
+</html>
