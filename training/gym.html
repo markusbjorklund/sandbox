@@ -19,6 +19,9 @@
             --card-border: #d1d5db;
             --highlight-bg: #eff6ff;
             --exercise-border: #f0f0f0;
+            /* Extra Card Colors (Greenish) */
+            --extra-border: #10b981;
+            --extra-bg: #ecfdf5;
         }
 
         body.dark {
@@ -28,15 +31,39 @@
             --card-border: #333;
             --highlight-bg: #1a2233;
             --exercise-border: #2d2d2d;
+            /* Extra Card Dark Mode */
+            --extra-border: #34d399;
+            --extra-bg: #064e3b33; 
         }
 
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg-color); padding: 10px 20px; display: flex; flex-direction: column; align-items: center; color: var(--text-color); transition: background 0.3s, color 0.3s; margin: 0; }
-        .container { max-width: 500px; width: 100%; margin-top: 10px; }
+        .container { max-width: 500px; width: 100%; margin-top: 10px; box-sizing: border-box; }
         
-        .day-card { background: var(--card-bg); margin: 12px 0; padding: 16px; border-radius: 12px; border-left: 6px solid var(--card-border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); transition: transform 0.2s, background 0.3s; }
+        /* Unified Card Sizing and Increased Vertical Space */
+        .day-card { 
+            box-sizing: border-box;
+            background: var(--card-bg); 
+            margin: 20px 0; /* Increased from 12px for more vertical space */
+            padding: 16px; 
+            border-radius: 12px; 
+            border-left: 6px solid var(--card-border); 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+            transition: background 0.3s;
+            width: 100%;
+        }
         
-        .highlight { border-left-color: #2563eb; background: var(--highlight-bg); transform: scale(1.02); }
+        /* Highlight for Today */
+        .highlight { 
+            border-left-color: #2563eb; 
+            background: var(--highlight-bg);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+        }
         .highlight h2 { color: #2563eb; }
+
+        /* Unique Style for Extra Card */
+        .extra-card { border-left-color: var(--extra-border); background: var(--extra-bg); }
+        .extra-card h2 { color: var(--extra-border); }
+        .extra-card .add { background: var(--extra-border); }
 
         h2 { margin: 0 0 10px 0; font-size: 1.2rem; display: flex; justify-content: space-between; }
         .today-tag { font-size: 0.7rem; background: #2563eb; color: white; padding: 2px 8px; border-radius: 10px; align-self: center; }
@@ -47,11 +74,30 @@
         .controls { display: flex; align-items: center; gap: 15px; }
         .count { font-size: 1.2rem; font-weight: bold; min-width: 25px; text-align: center; }
         
-        button.add { background: #2563eb; color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; font-size: 20px; font-weight: bold; }
-        button.add:active { background: #1e40af; transform: scale(0.9); }
+        /* Centering Fix for Safari Mobile */
+        button.add { 
+            background: #2563eb; 
+            color: white; 
+            border: none; 
+            width: 35px; 
+            height: 35px; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            font-size: 22px; 
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 0;
+            padding: 0;
+            -webkit-appearance: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        button.add:active { opacity: 0.7; transform: scale(0.9); }
 
         .footer { margin-top: 30px; text-align: center; width: 100%; display: flex; flex-direction: column; gap: 10px; align-items: center; padding-bottom: 50px; }
-        .btn-ui { border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 220px; font-size: 0.9rem; }
+        .btn-ui { border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 220px; font-size: 0.9rem; -webkit-appearance: none; }
         .dark-btn { background: #555; color: white; }
         .reset-btn { background: #ef4444; color: white; opacity: 0.8; }
         .reset-btn:hover { opacity: 1; }
@@ -71,12 +117,11 @@
     <div class="day-card" data-day="2">
         <h2>Tuesday <span class="today-tag" style="display:none">TODAY</span></h2>
         <div class="exercise">Powerwalk <div class="controls"><span class="count" id="tue1">0</span><button class="add" onclick="add('tue1')">+</button></div></div>
-        <div class="exercise">Seated crunch <div class="controls"><span class="count" id="tue2">0</span><button class="add" onclick="add('tue2')">+</button></div></div>
     </div>
 
     <div class="day-card" data-day="3">
         <h2>Wednesday <span class="today-tag" style="display:none">TODAY</span></h2>
-        <div class="exercise">Lats pulldown <div class="controls"><span class="count" id="wed1">0</span><button class="add" onclick="add('wed1')">+</button></div></div>
+        <div class="exercise">Lat pulldown <div class="controls"><span class="count" id="wed1">0</span><button class="add" onclick="add('wed1')">+</button></div></div>
         <div class="exercise">Incline press <div class="controls"><span class="count" id="wed2">0</span><button class="add" onclick="add('wed2')">+</button></div></div>
         <div class="exercise">Shoulder press <div class="controls"><span class="count" id="wed3">0</span><button class="add" onclick="add('wed3')">+</button></div></div>
         <div class="exercise">Seated cable row <div class="controls"><span class="count" id="wed4">0</span><button class="add" onclick="add('wed4')">+</button></div></div>
@@ -87,7 +132,7 @@
         <div class="exercise">Leg press <div class="controls"><span class="count" id="thu1">0</span><button class="add" onclick="add('thu1')">+</button></div></div>
         <div class="exercise">Leg extension <div class="controls"><span class="count" id="thu2">0</span><button class="add" onclick="add('thu2')">+</button></div></div>
         <div class="exercise">Hack squat <div class="controls"><span class="count" id="thu3">0</span><button class="add" onclick="add('thu3')">+</button></div></div>
-        <div class="exercise">Hip abductor <div class="controls"><span class="count" id="thu4">0</span><button class="add" onclick="add('thu4')">+</button></div></div>
+        <div class="exercise">Abductor <div class="controls"><span class="count" id="thu4">0</span><button class="add" onclick="add('thu4')">+</button></div></div>
     </div>
 
     <div class="day-card" data-day="5">
@@ -101,7 +146,17 @@
     <div class="day-card" data-day="6">
         <h2>Saturday <span class="today-tag" style="display:none">TODAY</span></h2>
         <div class="exercise">Powerwalk <div class="controls"><span class="count" id="sat1">0</span><button class="add" onclick="add('sat1')">+</button></div></div>
-        <div class="exercise">Seated crunch <div class="controls"><span class="count" id="sat2">0</span><button class="add" onclick="add('sat2')">+</button></div></div>
+    </div>
+
+    <div class="day-card extra-card" data-day="extra">
+        <h2>Extra</h2>
+        <div class="exercise">Seated crunch <div class="controls"><span class="count" id="ext1">0</span><button class="add" onclick="add('ext1')">+</button></div></div>
+        <div class="exercise">Lower back <div class="controls"><span class="count" id="ext2">0</span><button class="add" onclick="add('ext2')">+</button></div></div>
+        <div class="exercise">Adductor <div class="controls"><span class="count" id="ext3">0</span><button class="add" onclick="add('ext3')">+</button></div></div>
+        <div class="exercise">Abductor <div class="controls"><span class="count" id="ext4">0</span><button class="add" onclick="add('ext4')">+</button></div></div>
+        <div class="exercise">Lat pulldown <div class="controls"><span class="count" id="ext5">0</span><button class="add" onclick="add('ext5')">+</button></div></div>
+        <div class="exercise">Dumbbell squat <div class="controls"><span class="count" id="ext6">0</span><button class="add" onclick="add('ext6')">+</button></div></div>
+        <div class="exercise">Lat raise <div class="controls"><span class="count" id="ext7">0</span><button class="add" onclick="add('ext7')">+</button></div></div>
     </div>
 
     <div class="footer">
@@ -112,17 +167,22 @@
 
 <script>
     const scheduleContainer = document.getElementById('schedule');
-    const dayCards = document.querySelectorAll('.day-card');
+    const dayCards = Array.from(document.querySelectorAll('.day-card'));
+    const extraCard = document.querySelector('.extra-card');
     const today = new Date().getDay(); 
 
-    // Setup: Highlight and Move Today to Top
     dayCards.forEach(card => {
-        if (parseInt(card.dataset.day) === today) {
+        const dayNum = parseInt(card.dataset.day);
+        if (dayNum === today) {
             card.classList.add('highlight');
             card.querySelector('.today-tag').style.display = 'inline-block';
             scheduleContainer.insertBefore(card, scheduleContainer.firstChild);
         }
     });
+    
+    if (scheduleContainer.children.length > 1) {
+        scheduleContainer.insertBefore(extraCard, scheduleContainer.children[1]);
+    }
 
     function add(id) {
         let el = document.getElementById(id);
