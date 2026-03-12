@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Gym Tracker</title>
     
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -11,7 +11,6 @@
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2936/2936886.png">
 
     <style>
-        /* Color Variables */
         :root {
             --bg-color: #f0f2f5;
             --card-bg: white;
@@ -19,9 +18,9 @@
             --card-border: #d1d5db;
             --highlight-bg: #eff6ff;
             --exercise-border: #f0f0f0;
-            /* Extra Card Colors (Greenish) */
             --extra-border: #10b981;
             --extra-bg: #ecfdf5;
+            --primary-blue: #2563eb;
         }
 
         body.dark {
@@ -31,7 +30,6 @@
             --card-border: #333;
             --highlight-bg: #1a2233;
             --exercise-border: #2d2d2d;
-            /* Extra Card Dark Mode */
             --extra-border: #34d399;
             --extra-bg: #064e3b33; 
         }
@@ -39,65 +37,87 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg-color); padding: 10px 20px; display: flex; flex-direction: column; align-items: center; color: var(--text-color); transition: background 0.3s, color 0.3s; margin: 0; }
         .container { max-width: 500px; width: 100%; margin-top: 10px; box-sizing: border-box; }
         
-        /* Unified Card Sizing and Increased Vertical Space */
         .day-card { 
             box-sizing: border-box;
             background: var(--card-bg); 
-            margin: 20px 0; /* Increased from 12px for more vertical space */
-            padding: 16px; 
+            margin: 20px 0; 
+            padding: 18px; 
             border-radius: 12px; 
             border-left: 6px solid var(--card-border); 
             box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
-            transition: background 0.3s;
             width: 100%;
         }
         
-        /* Highlight for Today */
         .highlight { 
-            border-left-color: #2563eb; 
+            border-left-color: var(--primary-blue); 
             background: var(--highlight-bg);
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
         }
-        .highlight h2 { color: #2563eb; }
+        .highlight h2 { color: var(--primary-blue); }
 
-        /* Unique Style for Extra Card */
         .extra-card { border-left-color: var(--extra-border); background: var(--extra-bg); }
         .extra-card h2 { color: var(--extra-border); }
-        .extra-card .add { background: var(--extra-border); }
+        /* Override button color for Extra card */
+        .extra-card button.add { background: var(--extra-border); }
 
-        h2 { margin: 0 0 10px 0; font-size: 1.2rem; display: flex; justify-content: space-between; }
-        .today-tag { font-size: 0.7rem; background: #2563eb; color: white; padding: 2px 8px; border-radius: 10px; align-self: center; }
+        h2 { margin: 0 0 12px 0; font-size: 1.25rem; display: flex; justify-content: space-between; font-weight: 700; }
+        .today-tag { font-size: 0.7rem; background: var(--primary-blue); color: white; padding: 2px 8px; border-radius: 10px; align-self: center; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        .exercise { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--exercise-border); }
+        .exercise { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 12px 0; 
+            border-bottom: 1px solid var(--exercise-border);
+            font-size: 1.05rem; 
+            font-weight: 500;
+        }
         .exercise:last-child { border-bottom: none; }
         
         .controls { display: flex; align-items: center; gap: 15px; }
-        .count { font-size: 1.2rem; font-weight: bold; min-width: 25px; text-align: center; }
+        .count { font-size: 1.2rem; font-weight: 700; min-width: 25px; text-align: center; }
         
-        /* Centering Fix for Safari Mobile */
+        /* Bulletproof Centering for Safari Mobile */
         button.add { 
-            background: #2563eb; 
+            position: relative;
+            background: var(--primary-blue); 
             color: white; 
             border: none; 
-            width: 35px; 
-            height: 35px; 
+            width: 38px; 
+            height: 38px; 
             border-radius: 50%; 
             cursor: pointer; 
-            font-size: 22px; 
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 0;
             padding: 0;
             -webkit-appearance: none;
             -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        /* Using a pseudo-element for the plus sign to force absolute centering */
+        button.add::before, button.add::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background-color: white;
+            transform: translate(-50%, -50%);
+            border-radius: 2px;
+        }
+        /* Horizontal line */
+        button.add::before {
+            width: 16px;
+            height: 3px;
+        }
+        /* Vertical line */
+        button.add::after {
+            width: 3px;
+            height: 16px;
         }
         
         button.add:active { opacity: 0.7; transform: scale(0.9); }
 
         .footer { margin-top: 30px; text-align: center; width: 100%; display: flex; flex-direction: column; gap: 10px; align-items: center; padding-bottom: 50px; }
-        .btn-ui { border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 220px; font-size: 0.9rem; -webkit-appearance: none; }
+        .btn-ui { border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 220px; font-size: 0.95rem; -webkit-appearance: none; }
         .dark-btn { background: #555; color: white; }
         .reset-btn { background: #ef4444; color: white; opacity: 0.8; }
         .reset-btn:hover { opacity: 1; }
@@ -108,55 +128,53 @@
 <div class="container" id="schedule">
     <div class="day-card" data-day="1">
         <h2>Monday <span class="today-tag" style="display:none">TODAY</span></h2>
-        <div class="exercise">Bench press <div class="controls"><span class="count" id="mon1">0</span><button class="add" onclick="add('mon1')">+</button></div></div>
-        <div class="exercise">Dumbbell row <div class="controls"><span class="count" id="mon2">0</span><button class="add" onclick="add('mon2')">+</button></div></div>
-        <div class="exercise">Chest press <div class="controls"><span class="count" id="mon3">0</span><button class="add" onclick="add('mon3')">+</button></div></div>
-        <div class="exercise">Behind the neck pull up <div class="controls"><span class="count" id="mon4">0</span><button class="add" onclick="add('mon4')">+</button></div></div>
+        <div class="exercise">Bench press <div class="controls"><span class="count" id="mon1">0</span><button class="add" onclick="add('mon1')"></button></div></div>
+        <div class="exercise">Dumbbell row <div class="controls"><span class="count" id="mon2">0</span><button class="add" onclick="add('mon2')"></button></div></div>
+        <div class="exercise">Chest press <div class="controls"><span class="count" id="mon3">0</span><button class="add" onclick="add('mon3')"></button></div></div>
+        <div class="exercise">Behind the neck pull up <div class="controls"><span class="count" id="mon4">0</span><button class="add" onclick="add('mon4')"></button></div></div>
     </div>
 
     <div class="day-card" data-day="2">
         <h2>Tuesday <span class="today-tag" style="display:none">TODAY</span></h2>
-        <div class="exercise">Powerwalk <div class="controls"><span class="count" id="tue1">0</span><button class="add" onclick="add('tue1')">+</button></div></div>
+        <div class="exercise">Powerwalk <div class="controls"><span class="count" id="tue1">0</span><button class="add" onclick="add('tue1')"></button></div></div>
     </div>
 
     <div class="day-card" data-day="3">
         <h2>Wednesday <span class="today-tag" style="display:none">TODAY</span></h2>
-        <div class="exercise">Lat pulldown <div class="controls"><span class="count" id="wed1">0</span><button class="add" onclick="add('wed1')">+</button></div></div>
-        <div class="exercise">Incline press <div class="controls"><span class="count" id="wed2">0</span><button class="add" onclick="add('wed2')">+</button></div></div>
-        <div class="exercise">Shoulder press <div class="controls"><span class="count" id="wed3">0</span><button class="add" onclick="add('wed3')">+</button></div></div>
-        <div class="exercise">Seated cable row <div class="controls"><span class="count" id="wed4">0</span><button class="add" onclick="add('wed4')">+</button></div></div>
+        <div class="exercise">Lat pulldown <div class="controls"><span class="count" id="wed1">0</span><button class="add" onclick="add('wed1')"></button></div></div>
+        <div class="exercise">Incline press <div class="controls"><span class="count" id="wed2">0</span><button class="add" onclick="add('wed2')"></button></div></div>
+        <div class="exercise">Shoulder press <div class="controls"><span class="count" id="wed3">0</span><button class="add" onclick="add('wed3')"></button></div></div>
+        <div class="exercise">Seated cable row <div class="controls"><span class="count" id="wed4">0</span><button class="add" onclick="add('wed4')"></button></div></div>
     </div>
 
     <div class="day-card" data-day="4">
         <h2>Thursday <span class="today-tag" style="display:none">TODAY</span></h2>
-        <div class="exercise">Leg press <div class="controls"><span class="count" id="thu1">0</span><button class="add" onclick="add('thu1')">+</button></div></div>
-        <div class="exercise">Leg extension <div class="controls"><span class="count" id="thu2">0</span><button class="add" onclick="add('thu2')">+</button></div></div>
-        <div class="exercise">Hack squat <div class="controls"><span class="count" id="thu3">0</span><button class="add" onclick="add('thu3')">+</button></div></div>
-        <div class="exercise">Abductor <div class="controls"><span class="count" id="thu4">0</span><button class="add" onclick="add('thu4')">+</button></div></div>
+        <div class="exercise">Leg press <div class="controls"><span class="count" id="thu1">0</span><button class="add" onclick="add('thu1')"></button></div></div>
+        <div class="exercise">Leg extension <div class="controls"><span class="count" id="thu2">0</span><button class="add" onclick="add('thu2')"></button></div></div>
+        <div class="exercise">Hack squat <div class="controls"><span class="count" id="thu3">0</span><button class="add" onclick="add('thu3')"></button></div></div>
+        <div class="exercise">Abductor <div class="controls"><span class="count" id="thu4">0</span><button class="add" onclick="add('thu4')"></button></div></div>
+        <div class="exercise">Adductor <div class="controls"><span class="count" id="thu5">0</span><button class="add" onclick="add('thu5')"></button></div></div>
     </div>
 
     <div class="day-card" data-day="5">
         <h2>Friday <span class="today-tag" style="display:none">TODAY</span></h2>
-        <div class="exercise">Hammer curl <div class="controls"><span class="count" id="fri1">0</span><button class="add" onclick="add('fri1')">+</button></div></div>
-        <div class="exercise">Bicep curl <div class="controls"><span class="count" id="fri2">0</span><button class="add" onclick="add('fri2')">+</button></div></div>
-        <div class="exercise">Cross body curl <div class="controls"><span class="count" id="fri3">0</span><button class="add" onclick="add('fri3')">+</button></div></div>
-        <div class="exercise">Half barbell ➔ Full <div class="controls"><span class="count" id="fri4">0</span><button class="add" onclick="add('fri4')">+</button></div></div>
+        <div class="exercise">Hammer curl <div class="controls"><span class="count" id="fri1">0</span><button class="add" onclick="add('fri1')"></button></div></div>
+        <div class="exercise">Bicep curl <div class="controls"><span class="count" id="fri2">0</span><button class="add" onclick="add('fri2')"></button></div></div>
+        <div class="exercise">Cross body curl <div class="controls"><span class="count" id="fri3">0</span><button class="add" onclick="add('fri3')"></button></div></div>
+        <div class="exercise">Half barbell ➔ Full <div class="controls"><span class="count" id="fri4">0</span><button class="add" onclick="add('fri4')"></button></div></div>
     </div>
 
     <div class="day-card" data-day="6">
         <h2>Saturday <span class="today-tag" style="display:none">TODAY</span></h2>
-        <div class="exercise">Powerwalk <div class="controls"><span class="count" id="sat1">0</span><button class="add" onclick="add('sat1')">+</button></div></div>
+        <div class="exercise">Powerwalk <div class="controls"><span class="count" id="sat1">0</span><button class="add" onclick="add('sat1')"></button></div></div>
     </div>
 
     <div class="day-card extra-card" data-day="extra">
         <h2>Extra</h2>
-        <div class="exercise">Seated crunch <div class="controls"><span class="count" id="ext1">0</span><button class="add" onclick="add('ext1')">+</button></div></div>
-        <div class="exercise">Lower back <div class="controls"><span class="count" id="ext2">0</span><button class="add" onclick="add('ext2')">+</button></div></div>
-        <div class="exercise">Adductor <div class="controls"><span class="count" id="ext3">0</span><button class="add" onclick="add('ext3')">+</button></div></div>
-        <div class="exercise">Abductor <div class="controls"><span class="count" id="ext4">0</span><button class="add" onclick="add('ext4')">+</button></div></div>
-        <div class="exercise">Lat pulldown <div class="controls"><span class="count" id="ext5">0</span><button class="add" onclick="add('ext5')">+</button></div></div>
-        <div class="exercise">Dumbbell squat <div class="controls"><span class="count" id="ext6">0</span><button class="add" onclick="add('ext6')">+</button></div></div>
-        <div class="exercise">Lat raise <div class="controls"><span class="count" id="ext7">0</span><button class="add" onclick="add('ext7')">+</button></div></div>
+        <div class="exercise">Seated crunch <div class="controls"><span class="count" id="ext1">0</span><button class="add" onclick="add('ext1')"></button></div></div>
+        <div class="exercise">Reverse fly <div class="controls"><span class="count" id="ext8">0</span><button class="add" onclick="add('ext8')"></button></div></div>
+        <div class="exercise">Lower back <div class="controls"><span class="count" id="ext2">0</span><button class="add" onclick="add('ext2')"></button></div></div>
+        <div class="exercise">Dumbbell squat <div class="controls"><span class="count" id="ext6">0</span><button class="add" onclick="add('ext6')"></button></div></div>
     </div>
 
     <div class="footer">
