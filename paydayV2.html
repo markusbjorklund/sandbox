@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Min Status</title>
+    
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/10216/10216876.png">
+
+    <style>
+        :root {
+            --bg: #121212;
+            --card: #1e1e1e;
+            --primary: #4da3ff;
+            --accent: #ff4d6d;
+            --text: #ffffff;
+            --text-secondary: #b2bec3;
+            --section-line: #333;
+        }
+
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background: var(--bg); 
+            color: var(--text);
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            padding: 20px;
+        }
+
+        .container { width: 100%; max-width: 450px; }
+
+        header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 { font-size: 2rem; margin: 0; text-transform: capitalize; letter-spacing: -0.5px; }
+        .date-subtitle { color: var(--text-secondary); font-weight: 500; margin-top: 5px; font-size: 1.1rem; }
+
+        .section-title { 
+            font-size: 0.8rem; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            color: var(--text-secondary); 
+            margin: 35px 0 12px 5px;
+            border-bottom: 1px solid var(--section-line);
+            padding-bottom: 8px;
+        }
+
+        .card { 
+            background: var(--card); 
+            border-radius: 24px; 
+            padding: 22px; 
+            margin-bottom: 16px; 
+            display: flex; 
+            align-items: center; 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            border-left: 8px solid var(--primary);
+        }
+
+        .holiday-card { border-left-color: var(--accent); }
+        .icon-box { font-size: 2.4rem; margin-right: 20px; min-width: 55px; text-align: center; }
+        .days-count { font-size: 2.6rem; font-weight: 900; line-height: 1; display: block; }
+        .label-text { font-size: 1rem; color: var(--text-secondary); margin-top: 6px; display: block; }
+
+        @media (max-width: 400px) {
+            .days-count { font-size: 2.2rem; }
+            .icon-box { font-size: 2rem; margin-right: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="today-name">--</h1>
+        <div id="today-full" class="date-subtitle">--</div>
+    </header>
+    
+    <div class="section-title">Ekonomi</div>
+    <div id="pay-container"></div>
+
+    <div class="section-title" id="holiday-header">Helgdagar</div>
+    <div id="holidays-container"></div>
+</div>
+
+<script>
+    const months = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
+    const weekdays = ["söndag", "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag"];
+    
+    // Helgdagar Finland 2026
+    const holidays2026 = [
+        { name: "Nyårsdagen", date: new Date(2026, 0, 1), icon: "🎆" },
+        { name: "Trettondagen", date: new Date(2026, 0, 6), icon: "👑" },
+        { name: "Långfredagen", date: new Date(2026, 3, 3), icon: "✝️" },
+        { name: "Annandag påsk", date: new Date(2026, 3, 6), icon: "🐣" },
+        { name: "Första maj", date: new Date(2026, 4, 1), icon: "🎈" },
+        { name: "Kristi himmelsfärd", date: new Date(2026, 4, 14), icon: "☁️" },
+        { name: "Midsommardagen", date: new Date(2026, 5, 20), icon: "🌿" },
+        { name: "Alla helgons dag", date: new Date(2026, 10, 31), icon: "🕯️" },
+        { name: "Självständighetsdagen", date: new Date(2026, 11, 6), icon: "🇫🇮" },
+        { name: "Juldagen", date: new Date(2026, 11, 25), icon: "🎄" },
+        { name: "Annandag jul", date: new Date(2026, 11, 26), icon: "🏇" }
+    ];
+
+    function init() {
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+        document.getElementById('today-name').innerText = weekdays[today.getDay()];
+        document.getElementById('today-full').innerText = `${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`;
+
+        // Lön (4:e varje månad)
+        let payDate = new Date(today.getFullYear(), today.getMonth(), 4);
+        if (today.getDate() > 4) payDate = new Date(today.getFullYear(), today.getMonth() + 1, 4);
+        
+        const diffPay = Math.max(0, Math.ceil((payDate - today) / (1000 * 60 * 60 * 24)));
+        const payUnit = diffPay === 1 ? "dag" : "dagar";
+        
+        document.getElementById('pay-container').innerHTML = `
+            <div class="card">
+                <div class="icon-box">💰</div>
+                <div class="info-box">
+                    <span class="days-count">${diffPay}</span>
+                    <span class="label-text">${payUnit} till lön</span>
+                </div>
+            </div>`;
+
+        // Helgdagar
+        const holidayContainer = document.getElementById('holidays-container');
+        let targetMonth = today.getMonth();
+        let monthHolidays = holidays2026.filter(h => h.date.getMonth() === targetMonth && h.date >= today);
+
+        while (monthHolidays.length === 0 && targetMonth < 11) {
+            targetMonth++;
+            monthHolidays = holidays2026.filter(h => h.date.getMonth() === targetMonth);
+        }
+
+        if (monthHolidays.length > 0) {
+            document.getElementById('holiday-header').innerText = `Helgdagar i ${months[targetMonth]}`;
+            monthHolidays.forEach(h => {
+                const diff = Math.max(0, Math.ceil((h.date - today) / (1000 * 60 * 60 * 24)));
+                const holUnit = diff === 1 ? "dag" : "dagar";
+                holidayContainer.innerHTML += `
+                    <div class="card holiday-card">
+                        <div class="icon-box">${h.icon}</div>
+                        <div class="info-box">
+                            <span class="days-count">${diff}</span>
+                            <span class="label-text">${holUnit} till ${h.name}</span>
+                        </div>
+                    </div>`;
+            });
+        }
+    }
+
+    init();
+</script>
+</body>
+</html>
